@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 
-public class NewMainClass 
+public class MainClass 
 {
 public static void main(String args[]){
 	 
@@ -14,14 +14,11 @@ public static void main(String args[]){
 	Scanner sc=new Scanner(System.in);
 	String option="";
 	Functionality obj=new Functionality();
-	Connection Conn=null;
+	
 	do
 	{
 	System.out.println("Please enter your choice:\n1.View Employees\n2.Add an Employee\n3.Search an Employee\n4.Exit");
-	DataSource ds=new DataSource();
-	ResultSet rs=null;
-	String query=null;
-	PreparedStatement pst=null;
+	
 	choice=sc.nextInt();
 	switch(choice)
 	{
@@ -69,7 +66,7 @@ public static void main(String args[]){
 			case 2:	System.out.println("Enter employee Department");
 					String deptName=sc.next();
 					
-					Iterator<Employee> iterator= obj.searchEmployeeDept(deptName).iterator();
+				
 					System.out.println("empID  empName     department   age  \n");
 					System.out.println("_________________________________________");
 					for (Employee temp : obj.searchEmployeeDept(deptName)) {
