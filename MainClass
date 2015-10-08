@@ -1,0 +1,110 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.Scanner;
+
+
+public class NewMainClass 
+{
+public static void main(String args[]){
+	 
+	int choice;
+	Scanner sc=new Scanner(System.in);
+	String option="";
+	Functionality obj=new Functionality();
+	Connection Conn=null;
+	do
+	{
+	System.out.println("Please enter your choice:\n1.View Employees\n2.Add an Employee\n3.Search an Employee\n4.Exit");
+	DataSource ds=new DataSource();
+	ResultSet rs=null;
+	String query=null;
+	PreparedStatement pst=null;
+	choice=sc.nextInt();
+	switch(choice)
+	{
+	case 1: obj.viewEmployee();
+			
+		
+			
+		  break;
+		  
+	case 2:
+		
+		
+			
+			System.out.println("Enter new Employee's Name");
+			String name=sc.next();
+			System.out.println("Enter new Employee's id");
+			int id=sc.nextInt();
+			System.out.println("Enter new Employee's department");
+			String dept=sc.next();
+			System.out.println("Enter new Employee's age");
+			int age=sc.nextInt();
+			obj.addEmployee(name, id, dept, age);
+			obj.viewEmployee();
+		
+		  break;
+		  
+	case 3: String subOption="";
+	Employee emp=new Employee();
+		do
+		{	
+		System.out.println("How do you want to search employee\n1.id\n2.Department\n3.Exit");
+			int choice2=sc.nextInt();
+			
+			switch(choice2){
+			 
+			case 1:System.out.println("Enter employee Id");
+					int searchId=sc.nextInt();
+					
+					emp=obj.searchEmployee(searchId);
+					System.out.println("Employee Name: "+emp.getEmpName()+"\nID: "+emp.getEmpID());
+					break;
+					
+					
+					
+			case 2:	System.out.println("Enter employee Department");
+					String deptName=sc.next();
+					
+					Iterator<Employee> iterator= obj.searchEmployeeDept(deptName).iterator();
+					System.out.println("empID  empName     department   age  \n");
+					System.out.println("_________________________________________");
+					for (Employee temp : obj.searchEmployeeDept(deptName)) {
+						System.out.println(temp.empName+ "  "+ temp.empID+ "   "+temp.department );
+					}
+
+				
+					break;
+					
+			case 3: 
+					System.exit(0);
+			
+			default: System.out.println("Enter valid choice");
+					break;
+			
+			}
+			System.out.println("Do you want to search more employees?(Y/N)");
+			subOption=sc.next();
+			}while(subOption.equalsIgnoreCase("Y"));
+		
+			
+			break;
+			
+	case 4: System.exit(0);
+	default: System.out.println("Please enter a valid option");
+			break;
+		
+	}
+	System.out.println("Do you want to continue?(Y/N)");
+	option=sc.next();
+	}while(option.equalsIgnoreCase("Y"));
+
+	
+	
+		
+		
+}
+}
