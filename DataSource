@@ -1,0 +1,38 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+
+ class DataSource
+{
+Connection con;
+String dbclass=null;
+String constring=null;
+String userid=null;
+String passwd=null;
+
+ DataSource()
+{
+	//dbclass="oracle.jdbc.driver.OracleDriver";
+	//constring="jdbc:oracle:thin:@//172.18.70.90:1521/orcl";
+	dbclass="com.mysql.jdbc.Driver";
+	constring="jdbc:mysql://localhost:3306/rupa";
+	userid="root";
+	passwd="root";
+
+	try{
+		Class.forName(dbclass);
+		con=DriverManager.getConnection(constring, userid, passwd);
+		System.out.println("Connection made");
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();	
+		System.out.println("Connection not made");
+	}
+}
+public Connection getCon()
+{
+	return con;
+}
+
+}
