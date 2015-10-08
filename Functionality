@@ -1,0 +1,174 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+
+public class Functionality
+{
+	Connection Conn=null;
+	DataSource ds=new DataSource();
+	ResultSet rs=null;
+	String query=null;
+	PreparedStatement pst=null;
+	
+	
+	public void addEmployee(String name,int id,String dept,int age)
+	{
+		try{
+			Conn=ds.getCon();
+		
+			query="insert into employee values(?,?,?,?)";
+			pst=Conn.prepareStatement(query);
+			pst.setString(1, name);
+			pst.setInt(2, id);
+			pst.setString(3, dept);
+			pst.setInt(4, age);
+			pst.executeUpdate();
+	
+			
+			System.out.println("Employee added");
+			}
+		catch(Exception e)
+			{
+			e.printStackTrace();
+			}
+		
+	}
+	public void viewEmployee()
+	{
+		Employee emp=new Employee();
+		try{
+			Conn=ds.getCon();
+			 query="Select * FROM employee";
+			pst=Conn.prepareStatement(query);
+			rs=pst.executeQuery();
+			System.out.println("Name         id    department");
+			System.out.println("-----------------------------------");
+			while(rs.next())
+			{
+				String employeeName=rs.getString(1);
+				int id=rs.getInt(2);
+				String department=rs.getString(3);
+				System.out.println(employeeName+"        "+id+"    "+department);
+				
+			}
+			
+			}
+		catch(Exception e)
+			{
+			e.printStackTrace();
+			}
+		
+		
+	}
+	
+	public Employee searchEmployee(int id)
+	{
+		Employee emp=new Employee();
+		try{
+			Conn=ds.getCon();
+			 query="Select * FROM employee WHERE id = ?";
+			 
+			pst=Conn.prepareStatement(query);
+			pst.setInt(1, id);
+			rs=pst.executeQuery();
+			System.out.println("Name         id    department");
+			System.out.println("-----------------------------------");
+			if(rs.next())
+			{
+				emp.setEmpName(rs.getString(1));
+				emp.setEmpID(rs.getInt(2));
+				emp.setDepartment(rs.getString(3));
+				emp.setAge(rs.getInt(4));
+				System.out.println("Hello hello");
+			}
+			else
+			{
+				System.out.println("Sorry No employee with id"+id);
+			}
+			
+			
+			}
+		catch(Exception e)
+			{
+			e.printStackTrace();
+			}
+		return emp;
+		
+	}
+	
+	public Employee[] searchEmployee(String department)
+	{
+		Employee[] emp=new Employee[30];
+	try{
+		Conn=ds.getCon();
+		 query="Select * FROM employee WHERE department=?";
+		 int i=0;
+		pst=Conn.prepareStatement(query);
+		pst.setString(1, department);
+		rs=pst.executeQuery();
+		System.out.println("hello");
+		
+		while(rs.next())
+		{
+			
+			emp[i]=new Employee();
+			emp[i].setEmpName(rs.getString(1));
+			emp[i].setEmpID(rs.getInt(2));
+			emp[i].setDepartment(rs.getString(3));
+			emp[i].setAge(rs.getInt(4));
+			
+			i++;
+			
+		}
+		
+		
+		}
+	catch(Exception e)
+		{
+		
+		e.printStackTrace();
+		}
+	return emp;
+	
+	}
+
+	public ArrayList<Employee> searchEmployeeDept(String department)
+	{
+		Employee[] emp=new Employee[30];
+		ArrayList<Employee> empList=new ArrayList<Employee>();
+	try{
+		Conn=ds.getCon();
+		 query="Select * FROM employee WHERE department=?";
+		 int i=0;
+		pst=Conn.prepareStatement(query);
+		pst.setString(1, department);
+		rs=pst.executeQuery();
+		System.out.println("hello");
+		
+		while(rs.next())
+		{
+			
+			emp[i]=new Employee();
+			emp[i].setEmpName(rs.getString(1));
+			emp[i].setEmpID(rs.getInt(2));
+			emp[i].setDepartment(rs.getString(3));
+			emp[i].setAge(rs.getInt(4));
+			empList.add(emp[i]);
+			i++;
+		
+		}
+		
+		
+		}
+	catch(Exception e)
+		{
+		
+		e.printStackTrace();
+		}
+	return empList;
+	
+	}
+
+}
